@@ -26,9 +26,10 @@ public class NotificationMachineService {
             e.printStackTrace();
         }
     }
-
+    // fixedDelay in milliseconds. Add desired notification duration here by updating value of fixedDelay below
     @Scheduled(fixedDelay = 300000)
     public void turnOnVaccineAvailabilityNotification() {
+        // You can set alternate age here too. Available ages: 18, 45, 60
         int age = 18;
             cowinClient
                     .getCowinVaccineAvailabilityData()
@@ -49,6 +50,7 @@ public class NotificationMachineService {
                                         return session;
                                     })
                                     .orElseGet(()-> {
+                                        // Comment out the try & catch block if you don't want notifications when no vaccines found for the age group
                                         try {
                                             popupMachine("No vaccine available", "No Vaccine found for age group "+age);
                                         } catch (AWTException e) {
